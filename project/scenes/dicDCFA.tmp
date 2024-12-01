@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://s16j5tekbj2m"]
+
+[ext_resource type="Script" path="res://scenes/dice_roll.gd" id="1_g5km2"]
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_g5km2")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.13181)

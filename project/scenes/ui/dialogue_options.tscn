@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://f1hvfx2nisdh"]
+
+[ext_resource type="Script" path="res://scenes/ui/dialogue_options.gd" id="1_iwwyr"]
+
+[node name="DialogueOptionPicker" type="Control"]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -841.0
+offset_bottom = -270.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_iwwyr")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -12.5
+offset_bottom = 12.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0

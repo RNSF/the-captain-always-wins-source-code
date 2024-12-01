@@ -1,0 +1,122 @@
+[gd_scene load_steps=7 format=3 uid="uid://n4u7apj3cv6g"]
+
+[ext_resource type="Script" path="res://scenes/liars_dice_physical.gd" id="1_3oas7"]
+[ext_resource type="AudioStream" uid="uid://d1ntbotu06dcr" path="res://sounds/drum_roll.wav" id="2_oj0yt"]
+[ext_resource type="AudioStream" uid="uid://bnfjrslpt32mi" path="res://sounds/drum_roll_crash.wav" id="3_r1ise"]
+
+[sub_resource type="Animation" id="Animation_qy2xo"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sound/DrumRoll:playing")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sound/DrumRollCrash:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sound/DrumRoll:volume_db")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-6.0]
+}
+
+[sub_resource type="Animation" id="Animation_4kjqy"]
+resource_name = "drum_roll"
+length = 1.04
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sound/DrumRoll:playing")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.03333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sound/DrumRollCrash:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.933333),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sound/DrumRoll:volume_db")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1, 1.03333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [-6.0, -3.0, -18.0]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_lift_cups"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4d7xj"]
+_data = {
+"RESET": SubResource("Animation_qy2xo"),
+"drum_roll": SubResource("Animation_4kjqy")
+}
+
+[node name="LiarsDicePhysical" type="Node"]
+script = ExtResource("1_3oas7")
+
+[node name="Sound" type="Node" parent="."]
+
+[node name="DrumRoll" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("2_oj0yt")
+volume_db = -6.0
+
+[node name="DrumRollCrash" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("3_r1ise")
+volume_db = 3.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_4d7xj")
+}

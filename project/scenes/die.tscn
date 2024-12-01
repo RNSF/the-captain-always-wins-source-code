@@ -1,0 +1,78 @@
+[gd_scene load_steps=12 format=3 uid="uid://c30xeocvlomln"]
+
+[ext_resource type="PackedScene" uid="uid://xdcxk1fy1a4c" path="res://models/dice.glb" id="1_83iww"]
+[ext_resource type="Script" path="res://scenes/die.gd" id="1_bsxf0"]
+[ext_resource type="AudioStream" uid="uid://d2yl88pet03hd" path="res://sounds/smoke_poof.wav" id="3_j01fv"]
+
+[sub_resource type="Gradient" id="Gradient_h41t6"]
+offsets = PackedFloat32Array(0, 0.170124, 0.460581, 0.680498, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.978721, 0.791762, 0, 1, 0.6, 0.4152, 0.204, 0.745098, 0.44, 0.17468, 0.1452, 0.729412, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_1nhcg"]
+gradient = SubResource("Gradient_h41t6")
+
+[sub_resource type="Curve" id="Curve_hotaf"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.754647, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -11.5344, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_bp0ft"]
+curve = SubResource("Curve_hotaf")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3x1di"]
+lifetime_randomness = 0.04
+emission_shape = 3
+emission_box_extents = Vector3(0.01, 0.01, 0.01)
+angle_min = -316.3
+angle_max = 360.0
+direction = Vector3(0, 1, 0)
+spread = 80.0
+initial_velocity_min = 0.1
+initial_velocity_max = 0.15
+angular_velocity_min = -84.07
+angular_velocity_max = 70.08
+gravity = Vector3(0, 0.8, 0)
+damping_min = 0.879
+damping_max = 1.0
+scale_min = 0.5
+scale_curve = SubResource("CurveTexture_bp0ft")
+color_ramp = SubResource("GradientTexture1D_1nhcg")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_b5gs5"]
+load_path = "res://.godot/imported/smoke.png-4ce44d0c966a6a09693dcb33792d404a.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5dfrt"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_texture = SubResource("CompressedTexture2D_b5gs5")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_lemvq"]
+material = SubResource("StandardMaterial3D_5dfrt")
+size = Vector2(0.04, 0.04)
+
+[node name="Die" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, -1.74846e-07, 0, 1.74846e-07, 1, 0, 0, 0)
+script = ExtResource("1_bsxf0")
+
+[node name="Model" parent="." instance=ExtResource("1_83iww")]
+transform = Transform3D(0.15, 0, 0, 0, 1.78873e-09, 0.15, 0, -0.15, 1.78873e-09, 0, 0, 0)
+
+[node name="SmokeParticles" type="GPUParticles3D" parent="."]
+emitting = false
+amount = 10
+lifetime = 0.6
+one_shot = true
+explosiveness = 0.98
+randomness = 0.46
+process_material = SubResource("ParticleProcessMaterial_3x1di")
+draw_pass_1 = SubResource("QuadMesh_lemvq")
+
+[node name="SmokePoofSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_j01fv")
+volume_db = -9.0
+
+[connection signal="finished" from="SmokeParticles" to="SmokeParticles" method="_on_finished"]

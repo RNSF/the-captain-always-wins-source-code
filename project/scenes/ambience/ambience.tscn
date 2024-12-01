@@ -1,0 +1,47 @@
+[gd_scene load_steps=8 format=3 uid="uid://dnhnh4gnp56hx"]
+
+[ext_resource type="AudioStream" uid="uid://dpis0n1ls68jh" path="res://sounds/ambience/waves_1.wav" id="1_2yexf"]
+[ext_resource type="Script" path="res://scenes/ambience/ambience.gd" id="1_gax4s"]
+[ext_resource type="AudioStream" uid="uid://orvvojnvmfot" path="res://sounds/ambience/squeeking.mp3" id="2_efyiq"]
+[ext_resource type="AudioStream" uid="uid://djvh51cuaximl" path="res://sounds/ambience/infinite_hum.mp3" id="3_bi37s"]
+[ext_resource type="AudioStream" uid="uid://dilqp2ve8n2ob" path="res://sounds/ambience/stormy_daniels.mp3" id="4_dv23c"]
+[ext_resource type="AudioStream" uid="uid://b6bfu2gghs8gi" path="res://sounds/ambience/night_island.wav" id="6_y0bsw"]
+[ext_resource type="AudioStream" uid="uid://dusb1cgqxow2a" path="res://sounds/ambience/static.mp3" id="7_xq3d8"]
+
+[node name="Ambience" type="Node"]
+script = ExtResource("1_gax4s")
+hum_loudness = 0.3
+
+[node name="Waves" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_2yexf")
+volume_db = -5.0
+stream_paused = true
+bus = &"Outside"
+
+[node name="Hum" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_bi37s")
+volume_db = inf_neg
+stream_paused = true
+bus = &"Ambience"
+
+[node name="Storm" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_dv23c")
+volume_db = -3.852
+stream_paused = true
+bus = &"Outside"
+
+[node name="ShipWood" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_efyiq")
+bus = &"Ambience"
+
+[node name="JungleNight" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_y0bsw")
+volume_db = -6.0
+stream_paused = true
+bus = &"Ambience"
+
+[node name="Static" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_xq3d8")
+volume_db = inf_neg
+stream_paused = true
+bus = &"Ambience"

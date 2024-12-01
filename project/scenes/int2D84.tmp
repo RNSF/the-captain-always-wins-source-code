@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://cb7hm7d3hpasd"]
+
+[ext_resource type="Script" path="res://scenes/intro.gd" id="1_8flft"]
+[ext_resource type="Texture2D" uid="uid://coep7114jtuhu" path="res://sprites/intros/ship_test.png" id="2_ut4ej"]
+[ext_resource type="Texture2D" uid="uid://6u3rwskseuak" path="res://sprites/intros/wreck_test.png" id="3_bm66u"]
+[ext_resource type="Texture2D" uid="uid://bqofcahcgbp1a" path="res://sprites/intros/step_test.png" id="4_ox7jp"]
+[ext_resource type="Texture2D" uid="uid://dpy5wv217kjlu" path="res://sprites/intros/room_test.png" id="5_1dkbv"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_8flft")
+
+[node name="slide1" type="Sprite2D" parent="."]
+texture = ExtResource("2_ut4ej")
+
+[node name="slide2" type="Sprite2D" parent="."]
+texture = ExtResource("3_bm66u")
+
+[node name="slide3" type="Sprite2D" parent="."]
+texture = ExtResource("4_ox7jp")
+
+[node name="slide4" type="Sprite2D" parent="."]
+texture = ExtResource("5_1dkbv")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true

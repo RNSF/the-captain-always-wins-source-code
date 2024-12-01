@@ -1,0 +1,54 @@
+[gd_scene load_steps=11 format=3 uid="uid://7exft8vk1uk3"]
+
+[ext_resource type="Script" path="res://scenes/intro.gd" id="1_1c4bg"]
+[ext_resource type="Shader" path="res://shaders/dissolve.gdshader" id="2_v1j62"]
+[ext_resource type="Texture2D" uid="uid://cmthf6mojjfhu" path="res://sprites/intros/ship_test.png" id="3_d6j0d"]
+[ext_resource type="Texture2D" uid="uid://bsx2e0eiw5imy" path="res://sprites/intros/wreck_test.png" id="4_t2j17"]
+[ext_resource type="Texture2D" uid="uid://dk1wcj88hsp2m" path="res://sprites/intros/step_test.png" id="5_vofgc"]
+[ext_resource type="Texture2D" uid="uid://dpy5wv217kjlu" path="res://sprites/intros/room_test.png" id="6_ufw2w"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jof7e"]
+shader = ExtResource("2_v1j62")
+shader_parameter/dissolve_value = null
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yubke"]
+shader = ExtResource("2_v1j62")
+shader_parameter/dissolve_value = null
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gbebo"]
+shader = ExtResource("2_v1j62")
+shader_parameter/dissolve_value = null
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ilba0"]
+shader = ExtResource("2_v1j62")
+shader_parameter/dissolve_value = null
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_1c4bg")
+
+[node name="slide1" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_jof7e")
+position = Vector2(240, 135)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("3_d6j0d")
+
+[node name="slide2" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_yubke")
+position = Vector2(240, 135)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("4_t2j17")
+
+[node name="slide3" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_gbebo")
+position = Vector2(240, 135)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("5_vofgc")
+
+[node name="slide4" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_ilba0")
+position = Vector2(240, 135)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("6_ufw2w")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 10.0

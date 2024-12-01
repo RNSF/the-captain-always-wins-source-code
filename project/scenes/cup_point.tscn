@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dgnuycsjsc12"]
+
+[ext_resource type="Script" path="res://scenes/cup_point.gd" id="1_1un1q"]
+
+[node name="CupPoint" type="Marker3D" groups=["CupPoints"]]
+script = ExtResource("1_1un1q")

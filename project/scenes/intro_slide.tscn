@@ -1,0 +1,15 @@
+[gd_scene load_steps=5 format=3 uid="uid://m4sjrkkcu5oi"]
+
+[ext_resource type="Shader" path="res://shaders/dissolve.gdshader" id="1_cd1v1"]
+[ext_resource type="Texture2D" uid="uid://b4ptdlphbwve8" path="res://shaders/noise/slide1.tres" id="2_n7guw"]
+[ext_resource type="Script" path="res://scenes/intro_slide.gd" id="3_q66bp"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tmh5u"]
+resource_local_to_scene = true
+shader = ExtResource("1_cd1v1")
+shader_parameter/dissolve_value = 1.0
+shader_parameter/dissolve_texture = ExtResource("2_n7guw")
+
+[node name="IntroSlide" type="CanvasGroup"]
+material = SubResource("ShaderMaterial_tmh5u")
+script = ExtResource("3_q66bp")

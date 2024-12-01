@@ -1,0 +1,52 @@
+[gd_scene load_steps=11 format=3 uid="uid://d2yutb46w43jl"]
+
+[ext_resource type="Script" path="res://scenes/ui/incrementor.gd" id="1_5geaf"]
+[ext_resource type="PackedScene" uid="uid://diq5ho3asq3p6" path="res://scenes/offset_texture_button.tscn" id="1_05mgf"]
+[ext_resource type="Texture2D" uid="uid://dievsq86wcmnm" path="res://sprites/arrow_up_unpressed.png" id="2_oiicl"]
+[ext_resource type="Texture2D" uid="uid://c8yjts5qevv74" path="res://sprites/arrow_up_hover.png" id="3_mpve8"]
+[ext_resource type="Texture2D" uid="uid://ypcid72x3k1l" path="res://sprites/arrow_down_unpressed.png" id="4_56ydk"]
+[ext_resource type="Texture2D" uid="uid://cg1l1c6pijxnt" path="res://sprites/arrow_down_hover.png" id="5_6g3a7"]
+[ext_resource type="Texture2D" uid="uid://b3s1xymvbipff" path="res://sprites/arrow_up_disabled.png" id="5_vv51j"]
+[ext_resource type="Texture2D" uid="uid://d22qaxtmcxuk1" path="res://sprites/arrow_down_disabled.png" id="8_jff7k"]
+[ext_resource type="AudioStream" uid="uid://cryt3ikrpjyxk" path="res://sounds/bet_increase.wav" id="9_formc"]
+[ext_resource type="AudioStream" uid="uid://ekli2xcj4b6q" path="res://sounds/bet_place.wav" id="10_q582n"]
+
+[node name="Incrementor" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+script = ExtResource("1_5geaf")
+
+[node name="IncreaseButton" parent="." instance=ExtResource("1_05mgf")]
+layout_mode = 2
+texture_offset = Vector2(0, -25)
+normal_texture = ExtResource("2_oiicl")
+pressed_texture = ExtResource("2_oiicl")
+hovered_texture = ExtResource("3_mpve8")
+disabled_texture = ExtResource("5_vv51j")
+
+[node name="DecreaseButton" parent="." instance=ExtResource("1_05mgf")]
+layout_mode = 2
+texture_offset = Vector2(0, 25)
+normal_texture = ExtResource("4_56ydk")
+pressed_texture = ExtResource("4_56ydk")
+hovered_texture = ExtResource("5_6g3a7")
+disabled_texture = ExtResource("8_jff7k")
+
+[node name="Sounds" type="Node" parent="."]
+
+[node name="BetIncrease" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("9_formc")
+
+[node name="BetDecrease" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("9_formc")
+pitch_scale = 0.8
+
+[node name="BetPlace" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("10_q582n")
+
+[connection signal="pressed" from="IncreaseButton" to="." method="_on_increase_button_pressed"]
+[connection signal="pressed" from="DecreaseButton" to="." method="_on_decrease_button_pressed"]

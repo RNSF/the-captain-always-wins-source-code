@@ -1,0 +1,106 @@
+[gd_scene load_steps=23 format=3 uid="uid://cb7hm7d3hpasd"]
+
+[ext_resource type="Script" path="res://scenes/intro.gd" id="1_8flft"]
+[ext_resource type="Shader" path="res://shaders/dither_ui.gdshader" id="1_xcn3o"]
+[ext_resource type="Texture2D" uid="uid://coep7114jtuhu" path="res://sprites/intros/ship_test.png" id="2_ut4ej"]
+[ext_resource type="Script" path="res://singletons/palette.gd" id="3_6ydqw"]
+[ext_resource type="Texture2D" uid="uid://6u3rwskseuak" path="res://sprites/intros/wreck_test.png" id="3_bm66u"]
+[ext_resource type="Texture2D" uid="uid://bisw3a062q3rs" path="res://sprites/test_palette.png" id="3_c4wwj"]
+[ext_resource type="Texture2D" uid="uid://bqofcahcgbp1a" path="res://sprites/intros/step_test.png" id="4_ox7jp"]
+[ext_resource type="Texture2D" uid="uid://dpy5wv217kjlu" path="res://sprites/intros/room_test.png" id="5_1dkbv"]
+[ext_resource type="Shader" path="res://shaders/dissolve.gdshader" id="5_4kycd"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8d7tl"]
+shader = ExtResource("1_xcn3o")
+shader_parameter/u_color_tex = ExtResource("3_c4wwj")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_uaf6w"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_6j0ww"]
+noise = SubResource("FastNoiseLite_uaf6w")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vsgna"]
+resource_local_to_scene = true
+shader = ExtResource("5_4kycd")
+shader_parameter/dissolve_value = 1.0
+shader_parameter/dissolve_texture = SubResource("NoiseTexture2D_6j0ww")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_1jvf6"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_hfmss"]
+resource_local_to_scene = true
+noise = SubResource("FastNoiseLite_1jvf6")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sl73a"]
+resource_local_to_scene = true
+shader = ExtResource("5_4kycd")
+shader_parameter/dissolve_value = 0.0
+shader_parameter/dissolve_texture = SubResource("NoiseTexture2D_hfmss")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_vj4n7"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_l4k18"]
+noise = SubResource("FastNoiseLite_vj4n7")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s2b6u"]
+resource_local_to_scene = true
+shader = ExtResource("5_4kycd")
+shader_parameter/dissolve_value = null
+shader_parameter/dissolve_texture = SubResource("NoiseTexture2D_l4k18")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_a02ia"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_tv2qm"]
+noise = SubResource("FastNoiseLite_a02ia")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_72dba"]
+resource_local_to_scene = true
+shader = ExtResource("5_4kycd")
+shader_parameter/dissolve_value = 0.0
+shader_parameter/dissolve_texture = SubResource("NoiseTexture2D_tv2qm")
+
+[node name="Node" type="Node"]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+material = SubResource("ShaderMaterial_8d7tl")
+offset_right = 1925.0
+offset_bottom = 1080.0
+script = ExtResource("3_6ydqw")
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(960, 540)
+render_target_update_mode = 4
+
+[node name="Node2D" type="Node2D" parent="SubViewportContainer/SubViewport"]
+scale = Vector2(2, 2)
+script = ExtResource("1_8flft")
+
+[node name="slide1" type="Sprite2D" parent="SubViewportContainer/SubViewport/Node2D"]
+material = SubResource("ShaderMaterial_vsgna")
+position = Vector2(240, 135)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_ut4ej")
+
+[node name="slide2" type="Sprite2D" parent="SubViewportContainer/SubViewport/Node2D"]
+material = SubResource("ShaderMaterial_sl73a")
+position = Vector2(240, 135)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("3_bm66u")
+
+[node name="slide3" type="Sprite2D" parent="SubViewportContainer/SubViewport/Node2D"]
+material = SubResource("ShaderMaterial_s2b6u")
+position = Vector2(240, 135)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("4_ox7jp")
+
+[node name="slide4" type="Sprite2D" parent="SubViewportContainer/SubViewport/Node2D"]
+material = SubResource("ShaderMaterial_72dba")
+position = Vector2(240, 135)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("5_1dkbv")
+
+[node name="Timer" type="Timer" parent="SubViewportContainer/SubViewport/Node2D"]
+wait_time = 10.0
+
+[connection signal="timeout" from="SubViewportContainer/SubViewport/Node2D/Timer" to="SubViewportContainer/SubViewport/Node2D" method="_on_timer_timeout"]

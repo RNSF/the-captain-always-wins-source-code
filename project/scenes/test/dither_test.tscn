@@ -1,0 +1,69 @@
+[gd_scene load_steps=11 format=3 uid="uid://dlep3tn72tvdc"]
+
+[ext_resource type="Shader" path="res://shaders/dither.gdshader" id="1_3jww7"]
+[ext_resource type="Texture2D" uid="uid://bisw3a062q3rs" path="res://sprites/test_palette.png" id="2_r1gkj"]
+[ext_resource type="Texture2D" uid="uid://ganpsgv4yc3b" path="res://sprites/2px_bayer_matrix.png" id="3_pyf06"]
+[ext_resource type="Script" path="res://scenes/rotating_box.gd" id="4_20hc5"]
+[ext_resource type="PackedScene" uid="uid://b16hssfbhsywa" path="res://scenes/game_room.tscn" id="5_fy1vc"]
+[ext_resource type="PackedScene" uid="uid://f1hvfx2nisdh" path="res://scenes/ui/dialogue_options.tscn" id="6_ksa1n"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r6w7f"]
+shader = ExtResource("1_3jww7")
+shader_parameter/u_bit_depth = 64
+shader_parameter/u_contrast = 2.0
+shader_parameter/u_offset = 0.0
+shader_parameter/u_dither_size = 2
+shader_parameter/u_dither_tex = ExtResource("3_pyf06")
+shader_parameter/u_color_tex = ExtResource("2_r1gkj")
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_xtfei"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_y64ih"]
+sky_material = SubResource("ProceduralSkyMaterial_xtfei")
+
+[sub_resource type="Environment" id="Environment_6aa6d"]
+background_mode = 2
+sky = SubResource("Sky_y64ih")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="SubViewportContainer" type="SubViewportContainer"]
+material = SubResource("ShaderMaterial_r6w7f")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="."]
+handle_input_locally = false
+size = Vector2i(960, 540)
+render_target_update_mode = 4
+
+[node name="Node3D" type="Node3D" parent="SubViewport"]
+visible = false
+
+[node name="CSGBox3D" type="CSGBox3D" parent="SubViewport/Node3D"]
+transform = Transform3D(-0.705219, -0.70641, -0.0604226, 0.0424753, 0.0429748, -0.998173, 0.707713, -0.706499, -0.000301672, 0, 0, 0)
+script = ExtResource("4_20hc5")
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport/Node3D"]
+transform = Transform3D(0.936886, 0, 0.349635, 0, 1, 0, -0.349635, 0, 0.936886, 0.851067, 0.659195, 2.48332)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewport/Node3D"]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewport/Node3D"]
+environment = SubResource("Environment_6aa6d")
+
+[node name="GameRoom" parent="SubViewport" instance=ExtResource("5_fy1vc")]
+
+[node name="UI" type="CanvasLayer" parent="."]
+scale = Vector2(2, 2)
+transform = Transform2D(2, 0, 0, 2, 0, 0)
+
+[node name="DialogueOptionPicker" parent="UI" instance=ExtResource("6_ksa1n")]

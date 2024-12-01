@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://cibs0nss0va1b"]
+
+[ext_resource type="FontFile" uid="uid://60knahgt5qpy" path="res://fonts/OldWizard.ttf" id="1_dq72q"]
+
+[node name="SlideLabel" type="RichTextLabel"]
+offset_left = -228.5
+offset_top = 83.5
+offset_right = 230.5
+offset_bottom = 179.5
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 2
+theme_override_fonts/normal_font = ExtResource("1_dq72q")
+text = "After years of searching for the secret to immortal life, a map has led me here, to a small island, tucked away in the Caribbean sea."
+fit_content = true

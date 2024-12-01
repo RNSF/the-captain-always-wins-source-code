@@ -1,0 +1,273 @@
+[gd_scene load_steps=33 format=3 uid="uid://uectnsyeae55"]
+
+[ext_resource type="Script" path="res://scenes/intro.gd" id="1_36yco"]
+[ext_resource type="Texture2D" uid="uid://dpy5wv217kjlu" path="res://sprites/intros/room_test.png" id="1_kv0tb"]
+[ext_resource type="Texture2D" uid="uid://dopi08b2p1aeh" path="res://sprites/intros/start_test.png" id="4_iia0v"]
+[ext_resource type="AudioStream" uid="uid://bhl3fp84626yx" path="res://sounds/page_turn_1.wav" id="6_vi8my"]
+[ext_resource type="AudioStream" uid="uid://dekjusepskxdl" path="res://sounds/page_turn_2.wav" id="7_6h1tk"]
+[ext_resource type="AudioStream" uid="uid://dg7jfjes7bwhw" path="res://sounds/page_turn_3.wav" id="8_pnplx"]
+[ext_resource type="Shader" path="res://shaders/dissolve.gdshader" id="9_wdi8m"]
+[ext_resource type="Texture2D" uid="uid://b3kfwdxurbtrj" path="res://sprites/intros/deck_clouds.png" id="10_4d0mw"]
+[ext_resource type="Texture2D" uid="uid://dtig7q0oov4ph" path="res://sprites/intros/deck.png" id="11_ssec2"]
+[ext_resource type="Texture2D" uid="uid://veq0mm8h116e" path="res://sprites/intros/shipwreck_clouds.png" id="12_8ymh5"]
+[ext_resource type="Texture2D" uid="uid://c3vqgerodxbsi" path="res://sprites/intros/shipwreck.png" id="12_aigix"]
+[ext_resource type="Texture2D" uid="uid://byubm45hwhoqi" path="res://sprites/intros/island_clouds.png" id="12_c2cec"]
+[ext_resource type="PackedScene" uid="uid://m4sjrkkcu5oi" path="res://scenes/intro_slide.tscn" id="13_j35ee"]
+[ext_resource type="Texture2D" uid="uid://cedr0jti33pl6" path="res://sprites/intros/shipwreck_tree_full.png" id="13_pdjcm"]
+[ext_resource type="Script" path="res://scenes/tree.gd" id="14_eriop"]
+[ext_resource type="Script" path="res://scenes/slide_label.gd" id="14_nwmpd"]
+[ext_resource type="Texture2D" uid="uid://b4ptdlphbwve8" path="res://shaders/noise/slide1.tres" id="14_re8q1"]
+[ext_resource type="PackedScene" uid="uid://cibs0nss0va1b" path="res://scenes/slide_label.tscn" id="15_4nbvl"]
+[ext_resource type="Texture2D" uid="uid://bqkbf771255gk" path="res://sprites/intros/island_boat.png" id="17_g2o4e"]
+[ext_resource type="Script" path="res://scenes/boat.gd" id="18_yne20"]
+[ext_resource type="Texture2D" uid="uid://ctjpu8bh7oie8" path="res://sprites/intros/island.png" id="19_3glrt"]
+[ext_resource type="Shader" path="res://shaders/text_outline.gdshader" id="21_h0tem"]
+[ext_resource type="FontFile" uid="uid://60knahgt5qpy" path="res://fonts/OldWizard.ttf" id="21_o2nqp"]
+[ext_resource type="AudioStream" uid="uid://be1jygidqpue5" path="res://sounds/game_start_charge.wav" id="24_8b0hw"]
+[ext_resource type="AudioStream" uid="uid://c2mtfpxohe1a6" path="res://sounds/game_start.wav" id="25_la77a"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_qcpn8"]
+streams_count = 3
+stream_0/stream = ExtResource("6_vi8my")
+stream_1/stream = ExtResource("7_6h1tk")
+stream_2/stream = ExtResource("8_pnplx")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5w5ck"]
+resource_local_to_scene = true
+shader = ExtResource("9_wdi8m")
+shader_parameter/dissolve_value = 1.0
+shader_parameter/dissolve_texture = ExtResource("14_re8q1")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a673w"]
+resource_local_to_scene = true
+shader = ExtResource("9_wdi8m")
+shader_parameter/dissolve_value = 1.0
+shader_parameter/dissolve_texture = ExtResource("14_re8q1")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sciv0"]
+resource_local_to_scene = true
+shader = ExtResource("9_wdi8m")
+shader_parameter/dissolve_value = 1.0
+shader_parameter/dissolve_texture = ExtResource("14_re8q1")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_twyp7"]
+resource_local_to_scene = true
+shader = ExtResource("9_wdi8m")
+shader_parameter/dissolve_value = 1.0
+shader_parameter/dissolve_texture = ExtResource("14_re8q1")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yvam0"]
+resource_local_to_scene = true
+shader = ExtResource("9_wdi8m")
+shader_parameter/dissolve_value = 1.0
+shader_parameter/dissolve_texture = ExtResource("14_re8q1")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yitnj"]
+resource_local_to_scene = true
+shader = ExtResource("21_h0tem")
+shader_parameter/width = 133.0
+shader_parameter/offset_x = -1.0
+shader_parameter/text_color = Color(1, 1, 1, 1)
+shader_parameter/text_color_2 = Color(0.663824, 0.663824, 0.663824, 1)
+shader_parameter/charge_percent = 0.0
+shader_parameter/line_color = Color(0, 0, 0, 1)
+shader_parameter/line_thickness = 1.0
+
+[node name="IntroCutscene" type="Node2D"]
+script = ExtResource("1_36yco")
+
+[node name="DissolveSound" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_qcpn8")
+volume_db = -3.0
+
+[node name="Slide4" parent="." instance=ExtResource("13_j35ee")]
+material = SubResource("ShaderMaterial_5w5ck")
+dissolve_texture = ExtResource("14_re8q1")
+
+[node name="Sprite" type="Sprite2D" parent="Slide4"]
+modulate = Color(1, 1, 1, 0.996078)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_kv0tb")
+
+[node name="SlideLabel" parent="Slide4" instance=ExtResource("15_4nbvl")]
+offset_left = -227.0
+offset_top = 75.0
+offset_right = 232.0
+offset_bottom = 171.0
+bbcode_enabled = true
+text = "[center]I enter the captains quarters. Dim light from a hanging lantern reveals a table in front of me. Three ghostly pirates sit patiently awaiting a fourth's arrival. "
+
+[node name="Slide3" parent="." instance=ExtResource("13_j35ee")]
+material = SubResource("ShaderMaterial_a673w")
+dissolve_texture = ExtResource("14_re8q1")
+
+[node name="ColorRect" type="ColorRect" parent="Slide3"]
+offset_left = -267.0
+offset_top = -157.0
+offset_right = 289.0
+offset_bottom = 158.0
+
+[node name="Parallax2D" type="Parallax2D" parent="Slide3"]
+repeat_size = Vector2(480, 0)
+autoscroll = Vector2(14, 0)
+repeat_times = 3
+
+[node name="Clouds" type="Sprite2D" parent="Slide3/Parallax2D"]
+modulate = Color(1, 1, 1, 0.996078)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("10_4d0mw")
+
+[node name="Sprite" type="Sprite2D" parent="Slide3"]
+modulate = Color(1, 1, 1, 0.996078)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("11_ssec2")
+
+[node name="SlideLabel" parent="Slide3" instance=ExtResource("15_4nbvl")]
+offset_left = -184.0
+offset_top = 83.0
+offset_right = 35.0
+offset_bottom = 179.0
+text = "The deck creaks ominously as I step aboard, the air heavy with the scent of brine. "
+
+[node name="Slide2" parent="." instance=ExtResource("13_j35ee")]
+visible = false
+material = SubResource("ShaderMaterial_sciv0")
+dissolve_texture = ExtResource("14_re8q1")
+
+[node name="ColorRect" type="ColorRect" parent="Slide2"]
+offset_left = -267.0
+offset_top = -157.0
+offset_right = 289.0
+offset_bottom = 158.0
+
+[node name="Parallax2D" type="Parallax2D" parent="Slide2"]
+repeat_size = Vector2(480, 0)
+autoscroll = Vector2(10, 0)
+repeat_times = 3
+
+[node name="Clouds" type="Sprite2D" parent="Slide2/Parallax2D"]
+modulate = Color(1, 1, 1, 0.996078)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("12_8ymh5")
+
+[node name="Ship" type="Sprite2D" parent="Slide2"]
+modulate = Color(1, 1, 1, 0.996078)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("12_aigix")
+
+[node name="Tree" type="Node2D" parent="Slide2"]
+modulate = Color(1, 1, 1, 0.996078)
+position = Vector2(-237, 151)
+rotation = 0.00279225
+scale = Vector2(0.25, 0.25)
+script = ExtResource("14_eriop")
+
+[node name="Tree2" type="Sprite2D" parent="Slide2/Tree"]
+modulate = Color(1, 1, 1, 0.996078)
+position = Vector2(940.709, -530.746)
+rotation = -0.00439679
+texture = ExtResource("13_pdjcm")
+metadata/_edit_lock_ = true
+
+[node name="SlideLabel" parent="Slide2" instance=ExtResource("15_4nbvl")]
+offset_left = -77.0
+offset_top = 78.0
+offset_right = 253.0
+offset_bottom = 126.0
+text = "I spy a shipwreck. From the outside, a broken hull, half-submerged in the sand and worn by the elements."
+
+[node name="Slide1" parent="." instance=ExtResource("13_j35ee")]
+visible = false
+material = SubResource("ShaderMaterial_twyp7")
+dissolve_texture = ExtResource("14_re8q1")
+
+[node name="ColorRect" type="ColorRect" parent="Slide1"]
+offset_left = -267.0
+offset_top = -157.0
+offset_right = 289.0
+offset_bottom = 158.0
+
+[node name="Parallax2D" type="Parallax2D" parent="Slide1"]
+repeat_size = Vector2(480, 0)
+autoscroll = Vector2(6, 0)
+repeat_times = 3
+
+[node name="Clouds" type="Sprite2D" parent="Slide1/Parallax2D"]
+modulate = Color(1, 1, 1, 0.996078)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("12_c2cec")
+
+[node name="Boat" type="Node2D" parent="Slide1"]
+modulate = Color(1, 1, 1, 0.996078)
+position = Vector2(0, -3)
+scale = Vector2(0.25, 0.25)
+script = ExtResource("18_yne20")
+
+[node name="Sprite" type="Sprite2D" parent="Slide1/Boat"]
+modulate = Color(1, 1, 1, 0.996078)
+position = Vector2(0, 5.61929)
+texture = ExtResource("17_g2o4e")
+
+[node name="Island" type="Sprite2D" parent="Slide1"]
+modulate = Color(1, 1, 1, 0.996078)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("19_3glrt")
+
+[node name="SlideLabel" parent="Slide1" instance=ExtResource("15_4nbvl")]
+
+[node name="Start" parent="." instance=ExtResource("13_j35ee")]
+material = SubResource("ShaderMaterial_yvam0")
+dissolve_texture = ExtResource("14_re8q1")
+
+[node name="Sprite" type="Sprite2D" parent="Start"]
+modulate = Color(1, 1, 1, 0.996078)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("4_iia0v")
+
+[node name="Label" type="Label" parent="Start"]
+visible = false
+texture_filter = 1
+material = SubResource("ShaderMaterial_yitnj")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -66.0
+offset_top = 48.0
+offset_right = 67.0
+offset_bottom = 73.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("21_o2nqp")
+text = "[Hold LMB to Start]"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("14_nwmpd")
+font = ExtResource("21_o2nqp")
+fancy_text = "[Hold LMB to Start]"
+
+[node name="Charge" type="AudioStreamPlayer" parent="Start/Label"]
+stream = ExtResource("24_8b0hw")
+volume_db = -20.0
+pitch_scale = 0.25
+
+[node name="Bang" type="AudioStreamPlayer" parent="Start/Label"]
+stream = ExtResource("25_la77a")
+volume_db = -10.0
+pitch_scale = 0.5
+
+[node name="SlideLabel2" parent="Start" instance=ExtResource("15_4nbvl")]
+offset_left = -227.0
+offset_top = -32.0
+offset_right = 232.0
+offset_bottom = 83.0
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+bbcode_enabled = true
+text = "[center]The Captain Always Wins"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(240, 135)
+
+[connection signal="finished" from="DissolveSound" to="." method="_on_dissolve_sound_finished"]
+[connection signal="game_started" from="Start/Label" to="." method="_on_label_game_started"]
+[connection signal="item_rect_changed" from="Start/Label" to="Start/Label" method="_on_item_rect_changed"]

@@ -1,0 +1,48 @@
+[gd_scene load_steps=6 format=3 uid="uid://8o2dltkl2chv"]
+
+[ext_resource type="FontFile" uid="uid://60knahgt5qpy" path="res://fonts/OldWizard.ttf" id="1_141na"]
+[ext_resource type="Script" path="res://scenes/ui/dialogue_option.gd" id="1_ao5ku"]
+[ext_resource type="Shader" path="res://shaders/text_outline.gdshader" id="2_grrar"]
+[ext_resource type="Script" path="res://scenes/ui/gradient_label.gd" id="4_adci6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fk56c"]
+resource_local_to_scene = true
+shader = ExtResource("2_grrar")
+shader_parameter/width = 72.0
+shader_parameter/offset_x = 7.5
+shader_parameter/text_color = Color(1, 1, 1, 1)
+shader_parameter/text_color_2 = Color(0.663824, 0.663824, 0.663824, 1)
+shader_parameter/charge_percent = 0.0
+shader_parameter/line_color = Color(0, 0, 0, 1)
+shader_parameter/line_thickness = 1.0
+
+[node name="DialogueOption" type="Control"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 3
+script = ExtResource("1_ao5ku")
+
+[node name="Offset" type="Control" parent="."]
+anchors_preset = 0
+
+[node name="Label" type="Label" parent="Offset"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_fk56c")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -44.0
+offset_right = 45.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_141na")
+text = "asdddasdsd"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("4_adci6")
+font = ExtResource("1_141na")
+fancy_text = "asdddasdsd"
+
+[connection signal="item_rect_changed" from="Offset/Label" to="Offset/Label" method="_on_item_rect_changed"]

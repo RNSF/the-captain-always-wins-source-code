@@ -1,0 +1,57 @@
+[gd_scene load_steps=4 format=3 uid="uid://ckf78w5o2weeq"]
+
+[ext_resource type="Script" path="res://scenes/better.gd" id="1_66jhb"]
+[ext_resource type="PackedScene" uid="uid://d2yutb46w43jl" path="res://scenes/ui/incrementor.tscn" id="1_hwthd"]
+[ext_resource type="Texture2D" uid="uid://c6m1psahdykvr" path="res://sprites/die_faces/1.png" id="2_thqdb"]
+
+[node name="Better" type="Control"]
+layout_mode = 3
+anchor_right = 0.396
+anchor_bottom = 0.704
+offset_right = -0.160034
+offset_bottom = -0.160034
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_66jhb")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DieCount" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="HBoxContainer/DieCount"]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+offset_top = 114.0
+offset_right = 187.0
+offset_bottom = 265.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 110
+text = "5x"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Incrementor" parent="HBoxContainer/DieCount" instance=ExtResource("1_hwthd")]
+layout_mode = 1
+
+[node name="DieFace" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/DieFace"]
+layout_mode = 2
+offset_top = 114.0
+offset_right = 188.0
+offset_bottom = 264.0
+texture = ExtResource("2_thqdb")
+stretch_mode = 5
+
+[node name="Incrementor" parent="HBoxContainer/DieFace" instance=ExtResource("1_hwthd")]
+layout_mode = 1

@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://cft13twrbtor"]
+
+[ext_resource type="Script" path="res://scenes/dialogue_display.gd" id="1_j2iao"]
+[ext_resource type="PackedScene" uid="uid://buomany872sdo" path="res://scenes/ui/subtitles.tscn" id="2_wcy2w"]
+
+[node name="DialogueDisplay" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_j2iao")
+
+[node name="Subtitles" parent="." instance=ExtResource("2_wcy2w")]
+layout_mode = 1

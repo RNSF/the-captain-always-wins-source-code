@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://un15mx44qam6"]
+
+[ext_resource type="Script" path="res://scenes/gun_point.gd" id="1_nqpak"]
+
+[node name="GunPoint" type="Marker3D" groups=["GunPoints"]]
+script = ExtResource("1_nqpak")

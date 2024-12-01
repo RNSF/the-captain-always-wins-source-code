@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://dhjdg84dddbbl"]
+
+[ext_resource type="Script" path="res://scenes/gun.gd" id="1_a6anj"]
+[ext_resource type="PackedScene" uid="uid://falqgkrwym7t" path="res://models/flintlock.glb" id="2_xr4v5"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_kku8f"]
+radius = 0.290213
+
+[node name="Gun" type="Node3D"]
+script = ExtResource("1_a6anj")
+
+[node name="Model" type="Node3D" parent="."]
+
+[node name="Sketchfab_Scene2" parent="Model" instance=ExtResource("2_xr4v5")]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0.0259638, -0.136898)
+
+[node name="Hurtbox" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0467287, -0.171042)
+shape = SubResource("SphereShape3D_kku8f")
+
+[editable path="Model/Sketchfab_Scene2"]

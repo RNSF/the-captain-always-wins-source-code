@@ -1,0 +1,129 @@
+[gd_scene load_steps=16 format=3 uid="uid://ckdxm5eyc6dyu"]
+
+[ext_resource type="Shader" path="res://shaders/dither.gdshader" id="1_kkj7l"]
+[ext_resource type="Texture2D" uid="uid://bisw3a062q3rs" path="res://sprites/test_palette.png" id="2_frn0b"]
+[ext_resource type="Texture2D" uid="uid://ganpsgv4yc3b" path="res://sprites/2px_bayer_matrix.png" id="3_ykl6o"]
+[ext_resource type="Script" path="res://scenes/shader_viewport_container.gd" id="4_os500"]
+[ext_resource type="PackedScene" uid="uid://b16hssfbhsywa" path="res://scenes/game_room.tscn" id="5_tyn2c"]
+[ext_resource type="PackedScene" uid="uid://cft13twrbtor" path="res://scenes/dialogue_display.tscn" id="6_0o7ya"]
+[ext_resource type="Shader" path="res://shaders/dither_ui.gdshader" id="8_2vlii"]
+[ext_resource type="PackedScene" uid="uid://da6iv0i5s0dxd" path="res://scenes/ambience/lightning_overlay.tscn" id="9_jrsup"]
+[ext_resource type="PackedScene" uid="uid://ckkdolg35aylw" path="res://scenes/ambience/gun_shot_overlay.tscn" id="10_aqcw8"]
+[ext_resource type="PackedScene" uid="uid://ccl6s4a88a7ya" path="res://scenes/ui/credits.tscn" id="10_gbpir"]
+[ext_resource type="PackedScene" uid="uid://uectnsyeae55" path="res://scenes/intro_cutscene.tscn" id="11_q7g3d"]
+[ext_resource type="PackedScene" uid="uid://dnhnh4gnp56hx" path="res://scenes/ambience/ambience.tscn" id="12_80d8s"]
+[ext_resource type="Texture2D" uid="uid://dkvqmn7e1hqvt" path="res://sprites/Crosshair.png" id="12_hpb2h"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r6w7f"]
+shader = ExtResource("1_kkj7l")
+shader_parameter/u_bit_depth = 64
+shader_parameter/u_contrast = 2.0
+shader_parameter/u_offset = 0.0
+shader_parameter/u_dither_size = 2
+shader_parameter/u_dither_tex = ExtResource("3_ykl6o")
+shader_parameter/u_color_tex = ExtResource("2_frn0b")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_83yqs"]
+shader = ExtResource("8_2vlii")
+shader_parameter/u_color_tex = ExtResource("2_frn0b")
+
+[node name="Main" type="Node"]
+
+[node name="Ambience" parent="." instance=ExtResource("12_80d8s")]
+is_hum_playing = false
+
+[node name="GameViewportContainer" type="SubViewportContainer" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_r6w7f")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+script = ExtResource("4_os500")
+
+[node name="SubViewport" type="SubViewport" parent="GameViewportContainer"]
+handle_input_locally = false
+size = Vector2i(960, 540)
+render_target_update_mode = 4
+
+[node name="GameRoom" parent="GameViewportContainer/SubViewport" instance=ExtResource("5_tyn2c")]
+
+[node name="PlayerModel" parent="GameViewportContainer/SubViewport/GameRoom" index="10"]
+is_turned_left = null
+
+[node name="PlayerModel2" parent="GameViewportContainer/SubViewport/GameRoom" index="11"]
+is_turned_left = null
+
+[node name="PlayerModel3" parent="GameViewportContainer/SubViewport/GameRoom" index="12"]
+is_turned_left = null
+
+[node name="UI" type="CanvasLayer" parent="."]
+scale = Vector2(2, 2)
+transform = Transform2D(2, 0, 0, 2, 0, 0)
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="UI"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_83yqs")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stretch = true
+script = ExtResource("4_os500")
+
+[node name="SubViewport" type="SubViewport" parent="UI/SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(960, 540)
+render_target_update_mode = 4
+
+[node name="DialogueDisplay" parent="UI/SubViewportContainer/SubViewport" node_paths=PackedStringArray("viewport") instance=ExtResource("6_0o7ya")]
+mouse_filter = 1
+viewport = NodePath("../../../../GameViewportContainer/SubViewport")
+
+[node name="Crosshair" type="Control" parent="UI/SubViewportContainer/SubViewport"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -480.0
+offset_bottom = -270.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="UI/SubViewportContainer/SubViewport/Crosshair"]
+custom_minimum_size = Vector2(8, 8)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("12_hpb2h")
+
+[node name="LightningOverlay" parent="UI/SubViewportContainer/SubViewport" instance=ExtResource("9_jrsup")]
+
+[node name="GunShotOverlay" parent="UI/SubViewportContainer/SubViewport" instance=ExtResource("10_aqcw8")]
+
+[node name="Credits" parent="UI/SubViewportContainer/SubViewport" instance=ExtResource("10_gbpir")]
+
+[node name="IntroCutscene" parent="UI/SubViewportContainer/SubViewport" instance=ExtResource("11_q7g3d")]
+
+[connection signal="navy_shot" from="GameViewportContainer/SubViewport/GameRoom/LiarsDicePhysical" to="UI/SubViewportContainer/SubViewport/GunShotOverlay" method="_on_liars_dice_physical_navy_shot"]
+[connection signal="player_shot" from="GameViewportContainer/SubViewport/GameRoom/LiarsDicePhysical" to="UI/SubViewportContainer/SubViewport/GunShotOverlay" method="_on_liars_dice_physical_player_shot"]
+[connection signal="ready_for_credits" from="GameViewportContainer/SubViewport/GameRoom/LiarsDicePhysical" to="UI/SubViewportContainer/SubViewport/Credits" method="_on_liars_dice_physical_ready_for_credits"]
+[connection signal="flashed" from="UI/SubViewportContainer/SubViewport/LightningOverlay" to="UI/SubViewportContainer/SubViewport/GunShotOverlay" method="_on_lightning_overlay_flashed"]
+[connection signal="transition_requested" from="UI/SubViewportContainer/SubViewport/GunShotOverlay" to="UI/SubViewportContainer/SubViewport/LightningOverlay" method="_on_gun_shot_overlay_transition_requested"]
+
+[editable path="GameViewportContainer/SubViewport/GameRoom"]
+[editable path="GameViewportContainer/SubViewport/GameRoom/Table"]

@@ -1,0 +1,49 @@
+[gd_scene load_steps=13 format=3 uid="uid://diq5ho3asq3p6"]
+
+[ext_resource type="Script" path="res://scenes/offset_texture_button.gd" id="1_4dahx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u3ief"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_givhe"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qp46f"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k6nik"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bbed0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_67idw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wum06"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4y44u"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1voao"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2yhif"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ldwdv"]
+
+[node name="OffsetTextureButton" type="Button"]
+size_flags_vertical = 3
+theme_override_styles/focus = SubResource("StyleBoxEmpty_u3ief")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_givhe")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_qp46f")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_k6nik")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_bbed0")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_67idw")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_wum06")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_4y44u")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_1voao")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_2yhif")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ldwdv")
+script = ExtResource("1_4dahx")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+
+[connection signal="item_rect_changed" from="." to="." method="_on_item_rect_changed"]

@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://cp1mdl0122k8i"]
+
+[node name="Lamp" type="OmniLight3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.50649, 0)
+light_energy = 0.6

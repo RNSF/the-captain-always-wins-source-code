@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c85itrrhsdk6l"]
+
+[ext_resource type="Script" path="res://scenes/dialogue_point.gd" id="1_fgqw5"]
+
+[node name="DialoguePoint" type="Marker3D" groups=["DialoguePoints"]]
+script = ExtResource("1_fgqw5")

@@ -1,0 +1,65 @@
+[gd_scene load_steps=10 format=3 uid="uid://ckf78w5o2weeq"]
+
+[ext_resource type="Script" path="res://scenes/better.gd" id="1_66jhb"]
+[ext_resource type="PackedScene" uid="uid://d2yutb46w43jl" path="res://scenes/ui/incrementor.tscn" id="1_hwthd"]
+[ext_resource type="Texture2D" uid="uid://c6m1psahdykvr" path="res://sprites/die_faces/1.png" id="2_thqdb"]
+[ext_resource type="Script" path="res://scenes/die_texture_rect.gd" id="4_hn87p"]
+[ext_resource type="Texture2D" uid="uid://dqelcc2w60w8k" path="res://sprites/die_faces/2.png" id="5_xer1f"]
+[ext_resource type="Texture2D" uid="uid://detxab3ve4o8x" path="res://sprites/die_faces/3.png" id="6_20oce"]
+[ext_resource type="Texture2D" uid="uid://bwxtgnyr8682f" path="res://sprites/die_faces/4.png" id="7_ah1mw"]
+[ext_resource type="Texture2D" uid="uid://cshvtkd0t8cmk" path="res://sprites/die_faces/5.png" id="8_wpuk5"]
+[ext_resource type="Texture2D" uid="uid://b0imyn6sd2nyc" path="res://sprites/die_faces/6.png" id="9_nwyhl"]
+
+[node name="Better" type="Control"]
+layout_mode = 3
+anchor_right = 0.396
+anchor_bottom = 0.704
+offset_right = -0.160034
+offset_bottom = -0.160034
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_66jhb")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DieCount" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="HBoxContainer/DieCount"]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+offset_top = 114.0
+offset_right = 187.0
+offset_bottom = 265.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 110
+text = "5x"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Incrementor" parent="HBoxContainer/DieCount" instance=ExtResource("1_hwthd")]
+layout_mode = 1
+
+[node name="DieFace" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DieTextureRect" type="TextureRect" parent="HBoxContainer/DieFace"]
+layout_mode = 2
+offset_top = 114.0
+offset_right = 188.0
+offset_bottom = 264.0
+texture = ExtResource("2_thqdb")
+stretch_mode = 5
+script = ExtResource("4_hn87p")
+faces = Array[Texture2D]([ExtResource("2_thqdb"), ExtResource("5_xer1f"), ExtResource("6_20oce"), ExtResource("7_ah1mw"), ExtResource("8_wpuk5"), ExtResource("9_nwyhl")])
+
+[node name="Incrementor" parent="HBoxContainer/DieFace" instance=ExtResource("1_hwthd")]
+layout_mode = 1

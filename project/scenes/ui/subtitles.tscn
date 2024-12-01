@@ -1,0 +1,58 @@
+[gd_scene load_steps=8 format=3 uid="uid://buomany872sdo"]
+
+[ext_resource type="FontFile" uid="uid://60knahgt5qpy" path="res://fonts/OldWizard.ttf" id="1_p0exl"]
+[ext_resource type="Script" path="res://scenes/ui/subtitles.gd" id="1_vp6tu"]
+[ext_resource type="Shader" path="res://shaders/text_outline.gdshader" id="3_qk0le"]
+[ext_resource type="AudioStream" uid="uid://cctp2wpaycc1b" path="res://sounds/talking/talk_1.wav" id="4_m37ah"]
+[ext_resource type="AudioStream" uid="uid://wbrbij761qbl" path="res://sounds/talking/talk_2.wav" id="5_nuovy"]
+[ext_resource type="AudioStream" uid="uid://drgwrepvukgxo" path="res://sounds/talking/talk_3.wav" id="5_u4g80"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_slt1e"]
+shader = ExtResource("3_qk0le")
+shader_parameter/width = 0.0
+shader_parameter/offset_x = 0.0
+shader_parameter/text_color = Color(0.758192, 0.758192, 0.758192, 1)
+shader_parameter/text_color_2 = Color(1, 1, 1, 1)
+shader_parameter/charge_percent = 1.0
+shader_parameter/line_color = Color(0, 0, 0, 1)
+shader_parameter/line_thickness = 1.0
+
+[node name="Subtitles" type="Control"]
+texture_filter = 1
+layout_mode = 3
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vp6tu")
+font = ExtResource("1_p0exl")
+
+[node name="Label" type="RichTextLabel" parent="."]
+material = SubResource("ShaderMaterial_slt1e")
+clip_contents = false
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -22.0
+offset_right = 2.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_fonts/normal_font = ExtResource("1_p0exl")
+bbcode_enabled = true
+text = "[center]Pirate"
+scroll_active = false
+
+[node name="Sounds" type="Node" parent="."]
+
+[node name="Talk1" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("4_m37ah")
+
+[node name="Talk2" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("5_nuovy")
+volume_db = -2.0
+
+[node name="Talk3" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("5_u4g80")
