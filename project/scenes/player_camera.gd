@@ -66,11 +66,10 @@ var current_gun : Gun :
 		current_gun = new_value
 		if current_gun: current_gun.is_hovered = true
 
-var mouse_position := Vector2.ONE / 2 :
+var mouse_position := Vector2(0.5, 0.3):
 	set(new_value):
 		mouse_position = new_value
 		mouse_position = mouse_position.clamp(Vector2.ZERO, Vector2.ONE)
-
 
 @onready var state_points := {} # keys are State: values are Node3D
 

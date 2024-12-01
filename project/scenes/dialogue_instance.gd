@@ -12,6 +12,8 @@ static var NPC_RESULTS_SUCCESS_i : int
 static var NPC_RESULTS_FAILURE_i : int
 static var PLAYER_RESULTS_FAILURE_i : int
 static var PLAYER_RESULTS_SUCCESS_i : int
+static var NPC_RESULTS_FORCE_BET_i : int
+static var NPC_RESULTS_BET_VALUE_i : int
 
 enum Id {
 	TEST_1,
@@ -76,8 +78,8 @@ enum Id {
 	PLAYER_RESULTS_FAILURE,
 	NPC_RESULTS_SUCCESS,
 	NPC_RESULTS_FAILURE,
-	BACK_TO_GAME,
 	PLEASE_TALK_BRO,
+	FORCE_BET,
 	
 	## NOT REAL DIALOGUES
 	LIAR,
@@ -207,13 +209,35 @@ var dialogues : Dictionary = {
 			result = await Dialogue.play(chosen_id).finished
 			Progress.has_player_done_optional_dialogue = true
 			if "start_new_round" in result: return result
+				
+		var i := NPC_RESULTS_FORCE_BET_i
+		while i == NPC_RESULTS_FORCE_BET_i: i = randi_range(0, 3)
+		NPC_RESULTS_FORCE_BET_i = i
+		match i:
+			0:
+				await display.say(last_speaking_actor, "But enough 'bout me. Time to make yer bet.")
+			1:
+				await display.say(last_speaking_actor, "Anyways, back to the game.")
+			2:
+				await display.say(last_speaking_actor, "But I'm blabbering. How 'bout we play.")
+			3:
+				await display.say(last_speaking_actor, "Lets not distract from the game though.")
 		
-		
-		await display.say(last_speaking_actor, "But enough 'bout me. Time to make yer bet.") # reach randomizer
 		if args.bet.amount > 0:
-			await display.say(last_speaking_actor, "Up the bid from " + Dialogue.get_bet_string(args.bet))
-		display.clear_speach()
-		
+			var j := NPC_RESULTS_BET_VALUE_i
+			while j == NPC_RESULTS_BET_VALUE_i: j = randi_range(0, 3)
+			NPC_RESULTS_BET_VALUE_i = j
+			match j:
+				0:
+					await display.say(last_speaking_actor, "Up the bid from " + Dialogue.get_bet_string(args.bet))
+				1:
+					await display.say(last_speaking_actor, "Last wager be " + Dialogue.get_bet_string(args.bet))
+				2:
+					await display.say(last_speaking_actor, "It be " + Dialogue.get_bet_string(args.bet) + " to you, matey.")
+				3:
+					await display.say(last_speaking_actor, "Yer turn, bet more than " + Dialogue.get_bet_string(args.bet))
+	
+		display.clear_speach()		
 		return {},
 	
 	Id.INTRO_DIALOGUE: func(args: Dictionary) -> Dictionary:
@@ -263,7 +287,7 @@ var dialogues : Dictionary = {
 	
 	Id.GAME_INSTRUCTIONS: func(args: Dictionary) -> Dictionary: 
 		display.clear_options()
-		await display.say(Dialogue.Actor.CAPTAIN, "I don't know a Buccaneer or a Corsair who doesn't!")
+		await display.say(Dialogue.Actor.CAPTAIN, "I don't know a Buccaneer or a Corsair who doesn't.")
 		await display.say(Dialogue.Actor.CAPTAIN, "Not to worry.")
 		LiarsDice.start_new_game(true)
 		await display.say(Dialogue.Actor.CAPTAIN, "We each have 5 dice.")
@@ -274,7 +298,7 @@ var dialogues : Dictionary = {
 		await display.say(Dialogue.Actor.CAPTAIN, "Bet how many of all the dice ye thinks share a certain value.")
 		#await display.say(Dialogue.Actor.CAPTAIN, "The tricky part is yer bet includes all the dice.")
 		await display.say(Dialogue.Actor.CAPTAIN, "Including the ones ye don't know.")
-		await display.say(Dialogue.Actor.CAPTAIN, "I might bet 5 dices rolled six.")
+		await display.say(Dialogue.Actor.CAPTAIN, "I might bet that 5 dices rolled sixes.")
 		await display.say(Dialogue.Actor.CAPTAIN, "But, if ye might reckon there only be 4.")
 		await display.say(Dialogue.Actor.CAPTAIN, "Ye could call me a [shake rate=20.0 level=5 connected=1]LIAR![/shake]...")
 		await display.say(Dialogue.Actor.CAPTAIN, "An' then we'll settle who's right.")
@@ -343,7 +367,7 @@ var dialogues : Dictionary = {
 	Id.PIRATE_DEATH_2: func(args: Dictionary) -> Dictionary:
 		display.clear_options()
 		await display.say(Dialogue.Actor.PIRATE_LEFT, "I wish I could say nobly. But our crew fell for greed.");
-		await display.say(Dialogue.Actor.PIRATE_LEFT, "We was around Bellaforma, after some booty."); # do we wanna stick with Bellaforma as the island?
+		await display.say(Dialogue.Actor.PIRATE_LEFT, "We was around [wave amp=20.0 freq=5.0 connected=1]Bellaforma[/wave], after some booty."); 
 		await display.say(Dialogue.Actor.PIRATE_LEFT, "Anchored down, and I, among a few, was left to the ship.");
 		await display.say(Dialogue.Actor.PIRATE_LEFT, "I hear call from above deck...");
 		await display.say(Dialogue.Actor.PIRATE_LEFT, "A little boat from the lee side o' the island, guns a blazing."); 
@@ -378,7 +402,7 @@ var dialogues : Dictionary = {
 		display.clear_options()
 		if LiarsDice.Player.PIRATE_RIGHT in LiarsDice.alive_players:
 			await display.say(Dialogue.Actor.PIRATE_LEFT, "Nay...");
-			await display.say(Dialogue.Actor.PIRATE_LEFT, "And I wont reveal any tricks around [wave amp=20.0 freq=5.0 connected=1]certain company[/wave] neither...");
+			await display.say(Dialogue.Actor.PIRATE_LEFT, "And I wont reveal any tricks around [shake rate=20.0 level=5 connected=1]certain company[/shake] neither...");
 		else:
 			await Dialogue.play(Id.PIRATE_SECRET).finished
 		display.clear_speach()
@@ -509,7 +533,7 @@ var dialogues : Dictionary = {
 			await display.say(Dialogue.Actor.PIRATE_RIGHT, "I will say it was an infamous crew we plundered. ");
 			await display.say(Dialogue.Actor.PIRATE_RIGHT, "Caught them offguard.");
 			await display.say(Dialogue.Actor.PIRATE_RIGHT, "But I ain't gonna speak to who we sunk...");
-			await display.say(Dialogue.Actor.PIRATE_RIGHT, "Some things are better left unsaid around [wave amp=20.0 freq=5.0 connected=1]certain company[/wave].");
+			await display.say(Dialogue.Actor.PIRATE_RIGHT, "Some things are better left unsaid around [shake rate=20.0 level=5 connected=1]certain company[/shake].");
 		else:
 			await Dialogue.play(Id.NAVY_SECRET).finished
 		display.clear_speach()
@@ -519,7 +543,7 @@ var dialogues : Dictionary = {
 		display.clear_options()
 		await display.say(Dialogue.Actor.PIRATE_RIGHT, "Aye, fortunate buccaneers we were.");
 		await display.say(Dialogue.Actor.PIRATE_RIGHT, "Ah our maiden voyage...");
-		await display.say(Dialogue.Actor.PIRATE_RIGHT, "We spotted an anchored boat abouts Bellaforma..."); # add affect?
+		await display.say(Dialogue.Actor.PIRATE_RIGHT, "We spotted an anchored boat abouts [wave amp=20.0 freq=5.0 connected=1]Bellaforma[/wave]...");
 		await display.say(Dialogue.Actor.PIRATE_RIGHT, "Thrice the size o' our ship,");
 		await display.say(Dialogue.Actor.PIRATE_RIGHT, "But with half their crew marooned on some wretched isle.");
 		display.clear_speach()
@@ -528,8 +552,8 @@ var dialogues : Dictionary = {
 	Id.NAVY_SECRET_2: func(args: Dictionary) -> Dictionary:
 		display.clear_options()
 		await display.say(Dialogue.Actor.PIRATE_RIGHT, "I boarded an' took 3 men myself,");
-		await display.say(Dialogue.Actor.PIRATE_RIGHT, "Plunged me [wave amp=20.0 freq=5.0 connected=1]golden cutlass[/wave] right through one of them's back."); # add affect?
-		await display.say(Dialogue.Actor.PIRATE_RIGHT, "Yarr, we really sent the [shake rate=20.0 level=5 connected=1]Scourge o' Port Royal[/shake] to the depths."); # add affect?
+		await display.say(Dialogue.Actor.PIRATE_RIGHT, "Plunged me [wave amp=20.0 freq=5.0 connected=1]golden cutlass[/wave] right through one of them's back."); 
+		await display.say(Dialogue.Actor.PIRATE_RIGHT, "Yarr, we really sent the [shake rate=20.0 level=5 connected=1]Scourge o' Port Royal[/shake] to the depths."); 
 		Progress.know_navy_secret = true
 		display.clear_speach()
 		return {},
@@ -634,7 +658,7 @@ var dialogues : Dictionary = {
 	
 	Id.NO_LOOK: func(args: Dictionary) -> Dictionary:
 		display.clear_options()
-		await display.say(Dialogue.Actor.CAPTAIN, "Bold that ye don't even look at yer dice.")
+		await display.say(Dialogue.Actor.CAPTAIN, "Ye don't even look at yer dice, bold.")
 		await display.say(Dialogue.Actor.CAPTAIN, "To each there own I guess...")
 		display.clear_speach()
 		return {},
@@ -647,8 +671,8 @@ var dialogues : Dictionary = {
 		return {},
 	
 	Id.FIRST_BET: func(args: Dictionary) -> Dictionary:
-		await display.say(args.actor, "Ye think I would lie this quick?")
-		await display.say(args.actor, "I'll give ye a second chance to change yer mind.")
+		await display.say(args.actor, "Ye think I would fib so soon?")
+		await display.say(args.actor, "I'll give ye a chance to change yer mind.")
 		display.clear_speach()
 		return {"do_second_chance": true},
 		
@@ -658,7 +682,7 @@ var dialogues : Dictionary = {
 		ACCUSING_i = i
 		match i:
 			0:
-				await display.say(args.actor, "Ye call me a liar?")
+				await display.say(args.actor, "Ye dare call me a liar?")
 			1:
 				await display.say(args.actor, "Ye not trust my claim?")
 			2:
@@ -673,9 +697,6 @@ var dialogues : Dictionary = {
 		return {},
 		
 	Id.ACCUSED: func(args: Dictionary) -> Dictionary:
-		# display.clear_speach() #perhaps?
-		# display.clear_options() #perhaps?
-		
 		var i := ACCUSED_i
 		while i == ACCUSED_i: i = randi_range(0, 5)
 		ACCUSED_i = i
@@ -729,7 +750,7 @@ var dialogues : Dictionary = {
 			3:
 				await display.say(args.actor, "I could spot that lie from the crow's nest.")
 			4:
-				await display.say(args.actor, "No suprise there.")
+				await display.say(args.actor, "No surprise there.")
 			5:
 				await display.say(args.actor, "I caught ye lying through yer teeth.")
 		
@@ -772,9 +793,37 @@ var dialogues : Dictionary = {
 		display.clear_speach()
 		
 		return {},
+		
+	Id.FORCE_BET: func(args: Dictionary, results) -> Dictionary:
+		var i := NPC_RESULTS_FORCE_BET_i
+		while i == NPC_RESULTS_FORCE_BET_i: i = randi_range(0, 3)
+		NPC_RESULTS_FORCE_BET_i = i
+		match i:
+			0:
+				await display.say(results["actor"], "But enough 'bout me. Time to make yer bet.")
+			1:
+				await display.say(results["actor"], "Anyways, back to the game.")
+			2:
+				await display.say(results["actor"], "But I'm blabbering. How 'bout we play.")
+			3:
+				await display.say(results["actor"], "Lets not distract from the game though..")
+		
+		if results["amount"] > 0:
+			var j := NPC_RESULTS_BET_VALUE_i
+			while j == NPC_RESULTS_BET_VALUE_i: j = randi_range(0, 3)
+			NPC_RESULTS_BET_VALUE_i = j
+			match j:
+				0:
+					await display.say(results["actor"], "Up the bid from " + results["bet_display"])
+				1:
+					await display.say(results["actor"], "Last wager be " + results["bet_display"])
+				2:
+					await display.say(results["actor"], "It be " + results["bet_display"] + "to you, matey.")
+				3:
+					await display.say(results["actor"], "Yer turn, bet more than " + results["bet_display"])
 	
-	Id.BACK_TO_GAME: func(args: Dictionary, last_speaking_actor) -> Dictionary:
-		await display.say(last_speaking_actor, "But enough 'bout me. Time to make yer bet.")
+		display.clear_speach()
+		
 		return {},
 	
 	Id.LIAR: func(args: Dictionary) -> Dictionary:
@@ -848,7 +897,7 @@ func can_give_option(id: Id) -> bool:
 		
 		Id.NAVY_NAME: 			return	not Progress.know_navy_name
 		Id.NAVY_NOW_1: 			return	not Progress.know_navy_sick and Progress.know_navy_name
-		Id.NAVY_NOW_2: 			return	not Progress.know_navy_dead 
+		Id.NAVY_NOW_2: 			return	not Progress.know_navy_dead and Progress.know_navy_sick
 		Id.NAVY_SHIP: 			return	not Progress.know_navy_ship and Progress.know_navy_name
 		Id.NAVY_SHIP_2: 		return	not Progress.know_navy_ship and Dialogue.is_completed(Id.NAVY_SHIP) # follow up
 		Id.NAVY_EVENT_1: 		return	not Progress.know_navy_sink and Progress.know_navy_ship

@@ -30,7 +30,6 @@ shader_parameter/u_color_tex = ExtResource("2_frn0b")
 [node name="Main" type="Node"]
 
 [node name="Ambience" parent="." instance=ExtResource("12_80d8s")]
-is_hum_playing = false
 
 [node name="GameViewportContainer" type="SubViewportContainer" parent="."]
 texture_filter = 1
@@ -50,14 +49,11 @@ render_target_update_mode = 4
 
 [node name="GameRoom" parent="GameViewportContainer/SubViewport" instance=ExtResource("5_tyn2c")]
 
-[node name="PlayerModel" parent="GameViewportContainer/SubViewport/GameRoom" index="10"]
-is_turned_left = null
+[node name="PirateGun" parent="GameViewportContainer/SubViewport/GameRoom" index="32"]
+transform = Transform3D(0.00621274, 0.999928, -0.0102348, 0.00599625, 0.0101976, 0.99993, 0.999963, -0.00627369, -0.00593246, -1.48723, 0.498987, -0.0520414)
 
-[node name="PlayerModel2" parent="GameViewportContainer/SubViewport/GameRoom" index="11"]
-is_turned_left = null
-
-[node name="PlayerModel3" parent="GameViewportContainer/SubViewport/GameRoom" index="12"]
-is_turned_left = null
+[node name="CaptainGun" parent="GameViewportContainer/SubViewport/GameRoom" index="35"]
+transform = Transform3D(-0.998964, 0.01603, 0.0425877, 0.043501, 0.061754, 0.997143, 0.0133543, 0.997963, -0.0623874, -0.532882, 0.417418, -1.1687)
 
 [node name="UI" type="CanvasLayer" parent="."]
 scale = Vector2(2, 2)
